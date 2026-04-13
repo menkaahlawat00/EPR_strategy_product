@@ -57,33 +57,12 @@
       padding: 2rem 1rem;
     }
 
-    .page {
-      max-width: 740px;
-      margin: 0 auto;
-    }
+    .page { max-width: 740px; margin: 0 auto; }
 
-    header {
-      margin-bottom: 2rem;
-    }
-
-    header h1 {
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 6px;
-    }
-
-    header p {
-      font-size: 13px;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
-
-    header .byline {
-      margin-top: 8px;
-      font-size: 12px;
-      color: var(--text-tertiary);
-    }
+    header { margin-bottom: 2rem; }
+    header h1 { font-size: 20px; font-weight: 500; margin-bottom: 6px; }
+    header p { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+    header .byline { margin-top: 8px; font-size: 12px; color: var(--text-tertiary); }
 
     .card {
       background: var(--bg);
@@ -118,13 +97,12 @@
 
     @media (max-width: 500px) {
       .grid-2, .grid-3 { grid-template-columns: 1fr; }
-      .preset-grid { grid-template-columns: repeat(2, 1fr) !important; }
     }
 
     .field { display: flex; flex-direction: column; gap: 5px; }
     .field label { font-size: 12px; color: var(--text-secondary); }
 
-    select, input[type="number"] {
+    select, input[type="number"], input[type="text"] {
       width: 100%;
       padding: 8px 10px;
       font-size: 14px;
@@ -138,9 +116,7 @@
       transition: border-color 0.15s;
     }
 
-    select:focus, input[type="number"]:focus {
-      border-color: var(--accent);
-    }
+    select:focus, input:focus { border-color: var(--accent); }
 
     .metric-card {
       background: var(--bg-secondary);
@@ -148,32 +124,14 @@
       padding: 1rem;
     }
 
-    .metric-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-bottom: 4px;
-    }
-
-    .metric-value {
-      font-size: 20px;
-      font-weight: 500;
-      color: var(--text-primary);
-    }
-
-    .metric-sub {
-      font-size: 11px;
-      color: var(--text-tertiary);
-      margin-top: 2px;
-    }
+    .metric-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 4px; }
+    .metric-value { font-size: 20px; font-weight: 500; color: var(--text-primary); }
+    .metric-sub { font-size: 11px; color: var(--text-tertiary); margin-top: 2px; }
 
     .delta-positive { color: var(--green-text); }
     .delta-negative { color: var(--red-text); }
 
-    hr {
-      border: none;
-      border-top: 0.5px solid var(--border);
-      margin: 1.25rem 0;
-    }
+    hr { border: none; border-top: 0.5px solid var(--border); margin: 1.25rem 0; }
 
     .badge {
       display: inline-block;
@@ -187,28 +145,13 @@
     .badge-amber { background: var(--amber-bg); color: var(--amber-text); }
     .badge-red   { background: var(--red-bg);   color: var(--red-text); }
 
-    .swap-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-    }
-
+    .swap-row { display: flex; align-items: flex-start; gap: 12px; }
     .swap-col { flex: 1; }
     .swap-col .mat-name { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; }
 
-    .arrow {
-      font-size: 20px;
-      color: var(--text-tertiary);
-      padding-top: 20px;
-      flex-shrink: 0;
-    }
+    .arrow { font-size: 20px; color: var(--text-tertiary); padding-top: 20px; flex-shrink: 0; }
 
-    .rec-note {
-      font-size: 11px;
-      color: var(--text-tertiary);
-      margin-top: 5px;
-      line-height: 1.4;
-    }
+    .rec-note { font-size: 11px; color: var(--text-tertiary); margin-top: 5px; line-height: 1.4; }
 
     .summary-box {
       background: var(--bg-secondary);
@@ -219,12 +162,7 @@
       color: var(--text-primary);
     }
 
-    .note {
-      font-size: 11px;
-      color: var(--text-tertiary);
-      line-height: 1.5;
-      margin-top: 0.75rem;
-    }
+    .note { font-size: 11px; color: var(--text-tertiary); line-height: 1.5; margin-top: 0.75rem; }
 
     footer {
       margin-top: 2rem;
@@ -235,93 +173,111 @@
       padding-top: 1rem;
     }
 
-    /* ── PRESET LAYER ── */
-    .preset-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 1rem;
+    /* SKU SEARCH */
+    .sku-search-wrap { position: relative; margin-bottom: 0.75rem; }
+
+    .sku-search-wrap input[type="text"] {
+      padding-right: 32px;
     }
 
-    .preset-btn {
-      background: var(--bg-secondary);
+    .sku-clear {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0;
+      display: none;
+    }
+
+    .sku-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: var(--bg);
       border: 0.5px solid var(--border-mid);
       border-radius: var(--radius-md);
-      padding: 10px 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      z-index: 100;
+      max-height: 280px;
+      overflow-y: auto;
+      display: none;
+    }
+
+    .sku-dropdown.open { display: block; }
+
+    .sku-group-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-tertiary);
+      padding: 8px 12px 4px;
+      background: var(--bg-secondary);
+      border-bottom: 0.5px solid var(--border);
+    }
+
+    .sku-option {
+      padding: 9px 12px;
       cursor: pointer;
-      text-align: left;
-      font-family: inherit;
-      transition: border-color 0.15s, background 0.15s;
+      border-bottom: 0.5px solid var(--border);
+      transition: background 0.1s;
     }
 
-    .preset-btn:hover {
-      border-color: var(--accent);
-      background: var(--bg);
-    }
+    .sku-option:last-child { border-bottom: none; }
+    .sku-option:hover { background: var(--bg-secondary); }
 
-    .preset-btn.active {
-      border-color: var(--accent);
-      background: var(--bg);
-      box-shadow: 0 0 0 1.5px var(--accent);
-    }
-
-    .preset-btn .pb-icon {
-      font-size: 18px;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .preset-btn .pb-name {
-      font-size: 11px;
-      font-weight: 500;
+    .sku-option .so-name {
+      font-size: 13px;
       color: var(--text-primary);
-      display: block;
-      line-height: 1.3;
+      font-weight: 500;
     }
 
-    .preset-btn .pb-risk {
+    .sku-option .so-meta {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 1px;
+    }
+
+    .sku-selected-info {
+      background: var(--bg-secondary);
+      border-radius: var(--radius-md);
+      padding: 10px 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .sku-selected-info.visible { display: block; }
+    .sku-selected-info strong { color: var(--text-primary); }
+
+    .sku-caveat {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      font-style: italic;
+    }
+
+    .risk-pill {
       display: inline-block;
       font-size: 10px;
       font-weight: 500;
-      padding: 1px 6px;
-      border-radius: 4px;
-      margin-top: 4px;
+      padding: 1px 7px;
+      border-radius: 10px;
+      margin-left: 6px;
+      vertical-align: middle;
     }
 
     .risk-high { background: var(--red-bg); color: var(--red-text); }
     .risk-med  { background: var(--amber-bg); color: var(--amber-text); }
     .risk-low  { background: var(--green-bg); color: var(--green-text); }
-
-    .preset-info {
-      background: var(--bg-secondary);
-      border-radius: var(--radius-md);
-      padding: 12px 14px;
-      margin-bottom: 1rem;
-      display: none;
-    }
-
-    .preset-info.visible { display: block; }
-
-    .preset-info .pi-skus {
-      font-size: 11px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 6px;
-    }
-
-    .preset-info .pi-skus strong {
-      color: var(--text-primary);
-      font-weight: 500;
-    }
-
-    .preset-info .pi-note {
-      font-size: 11px;
-      color: var(--text-tertiary);
-      line-height: 1.5;
-      border-top: 0.5px solid var(--border);
-      padding-top: 6px;
-      margin-top: 6px;
-    }
   </style>
 </head>
 <body>
@@ -333,58 +289,16 @@
     <p class="byline">A prototype by Manks &nbsp;·&nbsp; Based on 2026 RPRA fee schedule (O. Reg. 391/21)</p>
   </header>
 
-  <!-- PRESET LAYER -->
+  <!-- SKU LOOKUP -->
   <div class="card">
-    <p class="section-label">Start from a Compliments category — or enter manually below</p>
-    <div class="preset-grid">
-      <button class="preset-btn" data-preset="pantry" onclick="applyPreset('pantry', this)">
-        <span class="pb-icon">🥫</span>
-        <span class="pb-name">Pantry</span>
-        <span class="pb-risk risk-med">Med risk</span>
-      </button>
-      <button class="preset-btn" data-preset="frozen" onclick="applyPreset('frozen', this)">
-        <span class="pb-icon">🧊</span>
-        <span class="pb-name">Frozen</span>
-        <span class="pb-risk risk-high">High risk</span>
-      </button>
-      <button class="preset-btn" data-preset="snacks" onclick="applyPreset('snacks', this)">
-        <span class="pb-icon">🍿</span>
-        <span class="pb-name">Snacks &amp; Candy</span>
-        <span class="pb-risk risk-high">High risk</span>
-      </button>
-      <button class="preset-btn" data-preset="drinks" onclick="applyPreset('drinks', this)">
-        <span class="pb-icon">💧</span>
-        <span class="pb-name">Drinks</span>
-        <span class="pb-risk risk-low">Low risk</span>
-      </button>
-      <button class="preset-btn" data-preset="dairy" onclick="applyPreset('dairy', this)">
-        <span class="pb-icon">🥛</span>
-        <span class="pb-name">Dairy</span>
-        <span class="pb-risk risk-med">Med risk</span>
-      </button>
-      <button class="preset-btn" data-preset="household" onclick="applyPreset('household', this)">
-        <span class="pb-icon">🧴</span>
-        <span class="pb-name">Household</span>
-        <span class="pb-risk risk-high">High risk</span>
-      </button>
-      <button class="preset-btn" data-preset="produce" onclick="applyPreset('produce', this)">
-        <span class="pb-icon">🥕</span>
-        <span class="pb-name">Fresh Fruit &amp; Veg</span>
-        <span class="pb-risk risk-high">High risk</span>
-      </button>
-      <button class="preset-btn" data-preset="prepared" onclick="applyPreset('prepared', this)">
-        <span class="pb-icon">🍱</span>
-        <span class="pb-name">Prepared Foods</span>
-        <span class="pb-risk risk-high">High risk</span>
-      </button>
+    <p class="section-label">Start from a Compliments SKU — or enter manually below</p>
+    <div class="sku-search-wrap">
+      <input type="text" id="sku-search" placeholder="Search by product name, e.g. 'pasta sauce', 'yogurt', 'frozen vegetables'…" autocomplete="off">
+      <button class="sku-clear" id="sku-clear" onclick="clearSku()">×</button>
+      <div class="sku-dropdown" id="sku-dropdown"></div>
     </div>
-
-    <div class="preset-info" id="preset-info">
-      <div class="pi-skus" id="pi-skus"></div>
-      <div class="pi-note" id="pi-note"></div>
-    </div>
+    <div class="sku-selected-info" id="sku-selected-info"></div>
   </div>
-  <!-- END PRESET LAYER -->
 
   <div class="card">
     <p class="section-label">Current packaging</p>
@@ -440,7 +354,6 @@
 
   <div class="card">
     <p class="section-label">Analysis</p>
-
     <div class="grid-3">
       <div class="metric-card">
         <div class="metric-label">Current annual tonnage</div>
@@ -523,155 +436,171 @@ const MATERIALS = {
   multi_layer:      { name: 'Multi-layer / laminate',   rpra: 0.0097, pro: 0.42, recyclability: 'red',   rec_label: 'Not recyclable',            rec_note: 'Mixed material construction prevents separation; landfill outcome likely' },
 };
 
-// Category presets: current material, suggested alternative, typical SKU examples, and a note
-const PRESETS = {
-  pantry: {
-    matA: 'glass',
-    matB: 'metal_steel',
-    weightA: 320,
-    weightB: 60,
-    units: 800000,
-    skus: [
-      'Pasta Sauce Original 680 ml — glass jar',
-      'Pasta Sauce Tomato & Basil 650 ml — glass jar',
-      'Canned Black Beans 540 ml — steel can',
-      'Canned Romano Beans 540 ml — steel can',
-    ],
-    note: 'Pantry spans glass jars (pasta sauces) and steel cans (beans, tomatoes). Glass jar pre-loaded as the dominant format by weight. Steel can shown as the comparison — it has higher recovery rates and lower PRO fees.',
-  },
-  frozen: {
-    matA: 'plastic_flexible',
-    matB: 'paper_boxboard',
-    weightA: 18,
-    weightB: 22,
-    units: 1200000,
-    skus: [
-      'Frozen Vegetables 750 g — resealable LDPE pouch',
-      'Frozen Fruit pouches — LDPE flexible',
-      'Dinner Bowl Chicken Burrito 300 g — cardboard tray + film seal',
-      'Frozen Chopped Spinach 500 g — LDPE flexible pouch',
-    ],
-    note: 'Most Compliments Frozen is LDPE resealable pouches. Accepted in Blue Box since Jan 2026 but Ontario MRF infrastructure for flexible film is severely lagging — acceptance does not equal recycling. Paperboard sleeve shown as directional alternative for applicable SKUs.',
-  },
-  snacks: {
-    matA: 'multi_layer',
-    matB: 'paper_boxboard',
-    weightA: 22,
-    weightB: 28,
-    units: 2000000,
-    skus: [
-      'Potato chips / tortilla chips — metallized multi-layer laminate bag',
-      'Crackers / cookies — multi-layer laminate bag',
-      'Trail mix / nuts — multi-layer laminate stand-up pouch',
-      'Granola bars — multi-layer laminate flow wrapper',
-    ],
-    note: 'Snacks almost universally use metallized multi-layer laminates for moisture and oxygen barrier — the highest EPR fee category at ~$0.42/kg. No recyclable alternative fully matches barrier performance yet. Paperboard shown as a directional option for drier products like crackers.',
-  },
-  drinks: {
-    matA: 'plastic_rigid',
-    matB: 'metal_alum',
-    weightA: 28,
-    weightB: 15,
-    units: 3000000,
-    skus: [
-      'Spring Water 24 × 500 ml — PET bottle',
-      'Distilled Spring Water 4 L — HDPE jug',
-      'Juice / soft drinks — PET bottle',
-      'K-Cup coffee pods — multi-layer laminate (outlier: highest risk in this category)',
-    ],
-    note: 'Bottled water and juice are predominantly PET — among the best-recovered plastics in Ontario. K-Cups are the outlier in this category: multi-layer laminate with near-zero recyclability. Aluminium shown as comparison for canned beverages.',
-  },
-  dairy: {
-    matA: 'plastic_rigid',
-    matB: 'paper_boxboard',
-    weightA: 55,
-    weightB: 30,
-    units: 900000,
-    skus: [
-      'Greek yogurt tubs 750 g — PP rigid tub + film lid',
-      'Sour cream 500 g — PP rigid tub + film lid',
-      'Cottage cheese 500 g — PP rigid tub + film lid',
-      'Butter 454 g — wax-coated paperboard',
-    ],
-    note: 'Yogurt and dairy tubs use PP rigid plastic — recoverable in Ontario curbside when clean, but the film lid is non-recyclable multi-layer material. The lid is a known problem element across the industry. Paperboard shown as an alternative for products where moisture barrier requirements allow it.',
-  },
-  household: {
-    matA: 'plastic_flexible',
-    matB: 'paper_boxboard',
-    weightA: 35,
-    weightB: 40,
-    units: 600000,
-    skus: [
-      'Paper towels 6-roll (GreenCare) — LDPE polywrap sleeve',
-      'Bathroom tissue 6-pack — LDPE polywrap sleeve',
-      'Dish soap / cleaning spray — HDPE bottle (lower risk)',
-      'Laundry detergent liquid — HDPE jug (lower risk)',
-    ],
-    note: 'Paper towel and tissue multipack polywrap is LDPE film — same infrastructure gap as frozen pouches. HDPE cleaning bottles are better-recovered. Paperboard sleeve shown as directional alternative for paper product multipacks.',
-  },
-  produce: {
-    matA: 'plastic_rigid',
-    matB: 'paper_boxboard',
-    weightA: 20,
-    weightB: 14,
-    units: 1500000,
-    skus: [
-      'Grape Tomatoes 283 g — PET clamshell',
-      'Carrots 1.36 kg — PP woven bag',
-      'Sweet Bell Peppers 3-pack — LDPE film wrap',
-      'Coleslaw Mix 397 g — PP rigid bag',
-    ],
-    note: 'Produce packaging is fragmented across PET clamshells, PP bags, and LDPE film. PET clamshell pre-loaded as the dominant format for berries and tomatoes — technically recyclable but clamshells are frequently rejected at MRFs due to contamination and size. Paperboard shown as a directional option for dry produce.',
-  },
-  prepared: {
-    matA: 'multi_layer',
-    matB: 'paper_boxboard',
-    weightA: 45,
-    weightB: 35,
-    units: 500000,
-    skus: [
-      'Frozen Dinner Bowl Chicken Burrito 300 g — CPET tray + multi-layer film seal',
-      'Frozen Entree Spaghetti Marinara 255 g — CPET tray + multi-layer film seal',
-      'Deli ready meals — multi-material tray + heat-seal film',
-    ],
-    note: 'Prepared meals use multi-material trays with heat-seal film lids — among the least recyclable formats in the Compliments range. Tray and film are different materials that cannot be easily separated at MRFs. This category carries the highest EPR fee exposure alongside snacks.',
-  },
-};
+// SKU data: name, category, packaging description, material key, pkg weight (g), typical annual Ontario units, suggested alt material, suggested alt weight (g), epr risk, caveat
+const SKUS = [
+  // PANTRY
+  { name: 'Pasta Sauce Original 680 ml',         cat: 'Pantry',           pkg: 'Glass jar + steel lid',              matA: 'glass',            wA: 310, units: 900000,  matB: 'metal_steel',      wB: 62,  risk: 'med',  caveat: 'Glass jar weight estimated at 310 g — typical for a 680 ml sauce jar. Steel can shown as alternative: lower PRO fee, higher Ontario recovery rate, and dramatically lighter, reducing transport emissions. Trade-off is consumer perception of canned vs jarred sauce.' },
+  { name: 'Pasta Sauce Tomato & Basil 650 ml',   cat: 'Pantry',           pkg: 'Glass jar + steel lid',              matA: 'glass',            wA: 300, units: 700000,  matB: 'metal_steel',      wB: 60,  risk: 'med',  caveat: 'Same glass jar format as Original variant. Steel can comparison — same rationale applies. Weight estimated at 300 g based on 650 ml jar industry standard.' },
+  { name: 'Pasta Sauce Alfredo 580 ml',          cat: 'Pantry',           pkg: 'Glass jar + steel lid',              matA: 'glass',            wA: 280, units: 500000,  matB: 'metal_steel',      wB: 58,  risk: 'med',  caveat: 'Smaller jar format — 280 g estimated tare weight. Steel can shown as alternative. Note: consumer acceptance of canned alfredo sauce vs jarred is an open question — this is a directional cost comparison, not a design recommendation.' },
+  { name: 'Canned Black Beans 540 ml',           cat: 'Pantry',           pkg: 'Steel can + steel lid',              matA: 'metal_steel',      wA: 58,  units: 1200000, matB: 'metal_steel',      wB: 58,  risk: 'low',  caveat: 'Steel cans are among the best-recovered packaging in Ontario — no material switch recommended. Already a strong EPR position. The lever here is lightweighting the can gauge and maximising recycled-steel content in procurement, not format change.' },
+  { name: 'Canned Romano Beans 540 ml',          cat: 'Pantry',           pkg: 'Steel can + steel lid',              matA: 'metal_steel',      wA: 58,  units: 800000,  matB: 'metal_steel',      wB: 58,  risk: 'low',  caveat: 'Same steel can format. Same position as Black Beans — already one of the best EPR formats in the pantry category. No material switch recommended.' },
+  { name: 'Canned Diced Tomatoes 796 ml',        cat: 'Pantry',           pkg: 'Steel can + steel lid',              matA: 'metal_steel',      wA: 72,  units: 1000000, matB: 'metal_steel',      wB: 72,  risk: 'low',  caveat: 'Larger format steel can. High-volume SKU with a strong EPR position — no material switch recommended. At scale, even minor lightweighting of the can itself generates meaningful tonnage reductions.' },
+  { name: 'Pasta Penne Rigate 900 g',            cat: 'Pantry',           pkg: 'Flexible plastic bag',               matA: 'plastic_flexible', wA: 12,  units: 600000,  matB: 'paper_boxboard',   wB: 18,  risk: 'high', caveat: 'Dry pasta bags are LDPE flexible film — low barrier requirements make this one of the more feasible candidates for a paper switch.' },
+  { name: 'Chicken Broth 900 ml',                cat: 'Pantry',           pkg: 'Tetra Pak multi-layer carton',       matA: 'multi_layer',      wA: 28,  units: 1100000, matB: 'metal_steel',      wB: 55,  risk: 'high', caveat: 'Tetra Pak is a multi-layer laminate (paperboard + polyethylene + aluminium foil) — not recyclable in most Ontario MRFs despite appearances. Steel can shown as alternative.' },
+  { name: 'Peanut Butter 500 g',                 cat: 'Pantry',           pkg: 'Rigid plastic jar (PET)',            matA: 'plastic_rigid',    wA: 42,  units: 750000,  matB: 'plastic_rigid',    wB: 42,  risk: 'low',  caveat: 'PET jar is conditionally recyclable and already a reasonable EPR position. No material switch is recommended here — the lever is moving to recycled-content PET or HDPE, and lightweighting the jar itself. Glass would be heavier with worse transport emissions and no recyclability improvement in Ontario.' },
 
-function applyPreset(key, btn) {
-  const p = PRESETS[key];
-  if (!p) return;
+  // FROZEN
+  { name: 'Frozen Vegetables — Peas 750 g',      cat: 'Frozen',           pkg: 'LDPE resealable pouch',              matA: 'plastic_flexible', wA: 16,  units: 1500000, matB: 'plastic_flexible', wB: 16,  risk: 'high', caveat: 'LDPE pouches accepted in Ontario Blue Box since Jan 2026 but MRF processing infrastructure is severely lagging. No viable alternative at scale — frozen veg requires moisture barrier and freezer-temperature performance that paperboard cannot provide. High EPR fee exposure with limited near-term redesign options.' },
+  { name: 'Frozen Vegetables — Broccoli 750 g',  cat: 'Frozen',           pkg: 'LDPE resealable pouch',              matA: 'plastic_flexible', wA: 16,  units: 1200000, matB: 'plastic_flexible', wB: 16,  risk: 'high', caveat: 'Same format and constraints as Peas. No viable recyclable alternative currently at scale for wet frozen veg.' },
+  { name: 'Frozen Fruit — Wild Blueberries 600 g', cat: 'Frozen',         pkg: 'LDPE resealable pouch',              matA: 'plastic_flexible', wA: 15,  units: 900000,  matB: 'plastic_flexible', wB: 15,  risk: 'high', caveat: 'Same LDPE pouch format. Frozen fruit has the added challenge of strong consumer expectation for resealability. No viable material switch recommended at this time.' },
+  { name: 'Dinner Bowl Chicken Burrito 300 g',   cat: 'Frozen',           pkg: 'CPET tray + multi-layer film seal',  matA: 'multi_layer',      wA: 18,  units: 600000,  matB: 'multi_layer',      wB: 18,  risk: 'high', caveat: 'No viable recyclable alternative currently exists at scale for wet frozen meals. The CPET tray and heat-seal film lid are different materials that cannot be separated at MRFs. Some manufacturers are trialling fibre-based trays with PE coating, but the coating makes them non-recyclable — trading one problem for another.' },
+  { name: 'Frozen Entree Spaghetti Marinara 255 g', cat: 'Frozen',        pkg: 'CPET tray + multi-layer film seal',  matA: 'multi_layer',      wA: 16,  units: 500000,  matB: 'multi_layer',      wB: 16,  risk: 'high', caveat: 'Same situation as the Dinner Bowl. No recyclable alternative at scale for sauced frozen entrees. This format incurs the highest PRO fee (~$0.42/kg) with no near-term redesign path that avoids it without changing the product format entirely.' },
+  { name: 'Frozen Chopped Spinach 500 g',        cat: 'Frozen',           pkg: 'LDPE flexible pouch',                matA: 'plastic_flexible', wA: 13,  units: 700000,  matB: 'plastic_flexible', wB: 13,  risk: 'high', caveat: 'LDPE flexible pouch — same constraints as all frozen veg. No viable alternative at scale.' },
 
-  // Toggle active state
-  document.querySelectorAll('.preset-btn').forEach(function(b) { b.classList.remove('active'); });
-  btn.classList.add('active');
+  // SNACKS
+  { name: 'Ripple Chips 200 g',                  cat: 'Snacks & Candy',   pkg: 'Metallized multi-layer laminate bag', matA: 'multi_layer',     wA: 14,  units: 2000000, matB: 'multi_layer',      wB: 14,  risk: 'high', caveat: 'Metallized multi-layer laminates are non-recyclable. No current alternative matches the oxygen and moisture barrier needed for chips — barrier failure means product spoilage at shelf. Highest EPR fee category with no near-term redesign path.' },
+  { name: 'Crackers — Original 300 g',           cat: 'Snacks & Candy',   pkg: 'Multi-layer laminate bag in box',    matA: 'multi_layer',      wA: 16,  units: 1500000, matB: 'multi_layer',      wB: 16,  risk: 'high', caveat: 'The outer boxboard is already recyclable — it is the inner multi-layer laminate bag that drives the EPR fee. The comparison field reflects the inner bag; switching the outer box to paperboard is already done. No viable alternative for the inner bag barrier layer.' },
+  { name: 'Granola Bars — Chocolate Chip 6pk',  cat: 'Snacks & Candy',   pkg: 'Multi-layer laminate flow wrappers + boxboard', matA: 'multi_layer', wA: 18, units: 1800000, matB: 'multi_layer', wB: 18, risk: 'high', caveat: 'The outer box is already paperboard (recyclable). The individual bar flow wrappers are multi-layer laminate and drive the EPR fee — no viable recyclable alternative for individual wrapper barrier performance currently at scale.' },
+  { name: 'Trail Mix 400 g',                     cat: 'Snacks & Candy',   pkg: 'Multi-layer laminate stand-up pouch', matA: 'multi_layer',     wA: 18,  units: 900000,  matB: 'multi_layer',      wB: 18,  risk: 'high', caveat: 'Nuts and trail mix require strong oxygen barrier to prevent rancidity — this makes mono-material alternatives extremely difficult. No viable recyclable alternative at scale.' },
+  { name: 'Chocolate Chips 300 g',               cat: 'Snacks & Candy',   pkg: 'Multi-layer laminate bag',           matA: 'multi_layer',      wA: 12,  units: 700000,  matB: 'multi_layer',      wB: 12,  risk: 'high', caveat: 'Multi-layer laminate required for moisture barrier. Chocolate chips are hygroscopic — moisture ingress causes bloom and product quality failure. No viable switch at scale.' },
 
-  // Set form values
-  document.getElementById('mat-a').value = p.matA;
-  document.getElementById('mat-b').value = p.matB;
-  document.getElementById('weight-a').value = p.weightA;
-  document.getElementById('weight-b').value = p.weightB;
-  document.getElementById('units').value = p.units;
+  // DRINKS
+  { name: 'Spring Water 500 ml (24-pack)',        cat: 'Drinks',           pkg: 'PET bottle + LDPE shrink wrap tray', matA: 'plastic_rigid',   wA: 14,  units: 3500000, matB: 'metal_alum',       wB: 13,  risk: 'low',  caveat: 'PET bottle is well-recovered in Ontario. Aluminium can shown as comparison — better recovery economics, marginally lighter. The LDPE shrink-wrap multipack sleeve is the weaker EPR element. Units entered per individual bottle.' },
+  { name: 'Distilled Spring Water 4 L',          cat: 'Drinks',           pkg: 'HDPE jug',                           matA: 'plastic_rigid',    wA: 95,  units: 800000,  matB: 'plastic_rigid',    wB: 95,  risk: 'low',  caveat: 'HDPE jug is well-recovered in Ontario. A 4 L aluminium can does not exist as a consumer format — no meaningful material alternative applies here. Focus is recycled-content HDPE and lightweighting the jug.' },
+  { name: 'Orange Juice 1.89 L',                 cat: 'Drinks',           pkg: 'HDPE jug',                           matA: 'plastic_rigid',    wA: 85,  units: 600000,  matB: 'plastic_rigid',    wB: 85,  risk: 'low',  caveat: 'HDPE jug is already a well-recovered format. Tetra Pak is the common industry alternative but is a multi-layer laminate (paperboard + PE + aluminium foil) with worse recyclability. No material switch recommended — lever is recycled-content HDPE.' },
+  { name: 'K-Cup Coffee Pods 30pk',              cat: 'Drinks',           pkg: 'Multi-layer laminate pods + boxboard', matA: 'multi_layer',    wA: 22,  units: 500000,  matB: 'multi_layer',      wB: 22,  risk: 'high', caveat: 'The outer boxboard is already recyclable. The pods themselves are multi-layer laminate and non-recyclable — they are the entire EPR problem. No viable recyclable pod format exists at scale. This SKU carries unavoidable high EPR fee exposure.' },
+  { name: 'Sparkling Water 355 ml (12-pack)',     cat: 'Drinks',           pkg: 'Aluminium cans + LDPE shrink wrap',  matA: 'metal_alum',       wA: 15,  units: 900000,  matB: 'metal_alum',       wB: 15,  risk: 'low',  caveat: 'Aluminium cans are already the best EPR position in the Drinks category — highest commodity value and recovery rate of any packaging material. No material switch needed. The LDPE shrink wrap on the multipack is the only weak element.' },
 
-  // Show SKU info panel
-  var info = document.getElementById('preset-info');
+  // DAIRY
+  { name: 'Greek Yogurt Plain 750 g',            cat: 'Dairy',            pkg: 'PP rigid tub + multi-layer film lid', matA: 'plastic_rigid',   wA: 48,  units: 1000000, matB: 'plastic_rigid',    wB: 48,  risk: 'med',  caveat: 'PP tub is recoverable in Ontario when clean — no material switch recommended. The film lid is a multi-layer laminate and is the weak element, but it is a small fraction of total weight. The lever is contamination reduction and recycled-content PP, not format change.' },
+  { name: 'Sour Cream 500 g',                    cat: 'Dairy',            pkg: 'PP rigid tub + multi-layer film lid', matA: 'plastic_rigid',   wA: 38,  units: 800000,  matB: 'plastic_rigid',    wB: 38,  risk: 'med',  caveat: 'Wet dairy product in PP tub — paperboard not viable. Same position as yogurt. Darker PP colours are more likely rejected by optical sorters. Focus is clean-PP recovery and recycled-content resin.' },
+  { name: 'Shredded Marble Cheddar 320 g',       cat: 'Dairy',            pkg: 'Multi-layer flexible bag (EVOH)',    matA: 'multi_layer',      wA: 14,  units: 1200000, matB: 'multi_layer',      wB: 14,  risk: 'high', caveat: 'Shredded cheese requires an EVOH oxygen barrier layer to prevent mould — this makes the bag a non-recyclable multi-layer laminate. No viable single-material alternative currently maintains the required shelf life.' },
+  { name: 'Butter 454 g',                        cat: 'Dairy',            pkg: 'Wax-coated paperboard wrap',         matA: 'paper_boxboard',   wA: 14,  units: 900000,  matB: 'paper_boxboard',   wB: 14,  risk: 'low',  caveat: 'Wax-coated paperboard — technically not recyclable due to wax coating but accepted in many Ontario programs. Already a low EPR risk format with no meaningful alternative.' },
+  { name: 'Cream Cheese 250 g',                  cat: 'Dairy',            pkg: 'PP tub + foil seal',                 matA: 'plastic_rigid',    wA: 22,  units: 700000,  matB: 'plastic_rigid',    wB: 22,  risk: 'med',  caveat: 'PP tub is recoverable when clean — no material switch recommended. The foil peel seal is a small fraction of total weight. Focus is clean-PP recovery and recycled-content resin, not format change.' },
+  { name: 'Cottage Cheese 500 g',                cat: 'Dairy',            pkg: 'PP rigid tub + film lid',            matA: 'plastic_rigid',    wA: 40,  units: 600000,  matB: 'plastic_rigid',    wB: 40,  risk: 'med',  caveat: 'Wet dairy in PP tub — paperboard not viable. Same position as yogurt and sour cream. Food contamination is the main reason PP tub recovery rates are lower than the material theoretically allows.' },
+
+  // HOUSEHOLD
+  { name: 'Paper Towels 6-roll (GreenCare)',      cat: 'Household',        pkg: 'LDPE polywrap sleeve',               matA: 'plastic_flexible', wA: 32,  units: 700000,  matB: 'paper_boxboard',   wB: 38,  risk: 'high', caveat: 'Paperboard sleeve is a genuine and technically feasible alternative for this SKU — the product itself is dry and rigid enough to support a paperboard sleeve without requiring barrier properties. Several brands have already made this switch. Strongest redesign candidate in the Household category.' },
+  { name: 'Bathroom Tissue 12-roll',             cat: 'Household',        pkg: 'LDPE polywrap sleeve',               matA: 'plastic_flexible', wA: 28,  units: 900000,  matB: 'paper_boxboard',   wB: 34,  risk: 'high', caveat: 'Same as paper towels — paperboard sleeve is technically feasible here. Dry product, no barrier requirement. This is one of the more straightforward material switches available to Own Brands.' },
+  { name: 'Dish Soap 740 ml',                    cat: 'Household',        pkg: 'HDPE bottle',                        matA: 'plastic_rigid',    wA: 38,  units: 600000,  matB: 'plastic_rigid',    wB: 38,  risk: 'low',  caveat: 'HDPE bottle is well-recovered in Ontario. No material switch recommended — lever is recycled-content HDPE.' },
+  { name: 'Laundry Detergent Liquid 1.47 L',     cat: 'Household',        pkg: 'HDPE jug',                           matA: 'plastic_rigid',    wA: 88,  units: 400000,  matB: 'plastic_rigid',    wB: 88,  risk: 'low',  caveat: 'HDPE jug is well-recovered. Switching to a paperboard box would require changing to powder or pod format — a product decision, not just a packaging decision. No direct material swap viable for liquid detergent.' },
+
+  // FRESH PRODUCE
+  { name: 'Grape Tomatoes 283 g',                cat: 'Fresh Fruit & Veg', pkg: 'PET clamshell',                    matA: 'plastic_rigid',    wA: 18,  units: 2000000, matB: 'plastic_rigid',    wB: 18,  risk: 'high', caveat: 'Tomatoes are wet, fragile, and require product visibility — paperboard is not viable. PET clamshells are technically recyclable but frequently rejected at Ontario MRFs due to contamination and size. No good alternative currently exists for small-format wet produce.' },
+  { name: 'Carrots 1.36 kg',                     cat: 'Fresh Fruit & Veg', pkg: 'PP woven bag',                     matA: 'plastic_flexible', wA: 14,  units: 1500000, matB: 'plastic_flexible', wB: 14,  risk: 'high', caveat: 'PP woven bags require breathability for produce — paperboard bags are not a viable substitute. Infrastructure gap applies as with all flexible plastic. No viable recyclable alternative at scale for this format.' },
+  { name: 'Sweet Bell Peppers 3-pack',            cat: 'Fresh Fruit & Veg', pkg: 'LDPE film wrap on cardboard tray', matA: 'plastic_flexible', wA: 10,  units: 1200000, matB: 'plastic_flexible', wB: 10,  risk: 'high', caveat: 'Mixed material: recyclable cardboard tray plus non-recyclable LDPE film wrap. The cleanest solution is eliminating the film wrap entirely and relying on the tray alone — not switching to a different material.' },
+  { name: 'Coleslaw Mix 397 g',                  cat: 'Fresh Fruit & Veg', pkg: 'PP rigid bag',                     matA: 'plastic_flexible', wA: 12,  units: 900000,  matB: 'plastic_flexible', wB: 12,  risk: 'high', caveat: 'PP bag for fresh produce — requires some moisture management and product visibility. Paperboard bags are not a viable substitute for fresh cut veg. No viable recyclable alternative at scale.' },
+];
+
+// Build a grouped index for fast rendering
+const SKU_BY_CAT = {};
+SKUS.forEach(function(s) {
+  if (!SKU_BY_CAT[s.cat]) SKU_BY_CAT[s.cat] = [];
+  SKU_BY_CAT[s.cat].push(s);
+});
+
+var currentSku = null;
+
+function renderDropdown(query) {
+  var dd = document.getElementById('sku-dropdown');
+  var q = query.trim().toLowerCase();
+  var matches = q.length === 0 ? SKUS : SKUS.filter(function(s) {
+    return s.name.toLowerCase().includes(q) || s.cat.toLowerCase().includes(q) || s.pkg.toLowerCase().includes(q);
+  });
+
+  if (matches.length === 0) {
+    dd.innerHTML = '<div style="padding:12px;font-size:13px;color:var(--text-tertiary)">No matching SKUs — adjust search or enter manually below.</div>';
+    dd.classList.add('open');
+    return;
+  }
+
+  // Group by category
+  var grouped = {};
+  matches.forEach(function(s) {
+    if (!grouped[s.cat]) grouped[s.cat] = [];
+    grouped[s.cat].push(s);
+  });
+
+  var html = '';
+  Object.keys(grouped).forEach(function(cat) {
+    html += '<div class="sku-group-label">' + cat + '</div>';
+    grouped[cat].forEach(function(s, i) {
+      var riskLabel = s.risk === 'high' ? 'High EPR risk' : s.risk === 'med' ? 'Med EPR risk' : 'Low EPR risk';
+      html += '<div class="sku-option" onclick="selectSku(' + SKUS.indexOf(s) + ')">' +
+        '<div class="so-name">' + s.name + '</div>' +
+        '<div class="so-meta">' + s.pkg + ' &nbsp;·&nbsp; ' + riskLabel + '</div>' +
+        '</div>';
+    });
+  });
+
+  dd.innerHTML = html;
+  dd.classList.add('open');
+}
+
+function selectSku(idx) {
+  var s = SKUS[idx];
+  currentSku = s;
+
+  document.getElementById('sku-search').value = s.name;
+  document.getElementById('sku-dropdown').classList.remove('open');
+  document.getElementById('sku-clear').style.display = 'block';
+
+  // Populate form
+  document.getElementById('mat-a').value = s.matA;
+  document.getElementById('weight-a').value = s.wA;
+  document.getElementById('units').value = s.units;
+  document.getElementById('mat-b').value = s.matB;
+  document.getElementById('weight-b').value = s.wB;
+
+  // Show info panel
+  var riskClass = s.risk === 'high' ? 'risk-high' : s.risk === 'med' ? 'risk-med' : 'risk-low';
+  var riskLabel = s.risk === 'high' ? 'High EPR risk' : s.risk === 'med' ? 'Med EPR risk' : 'Low EPR risk';
+  var info = document.getElementById('sku-selected-info');
   info.classList.add('visible');
-  document.getElementById('pi-skus').innerHTML =
-    '<strong>Typical Compliments SKUs in this category:</strong><br>' +
-    p.skus.map(function(s) { return '· ' + s; }).join('<br>');
-  document.getElementById('pi-note').textContent = p.note;
+  info.innerHTML =
+    '<strong>' + s.name + '</strong>' +
+    '<span class="risk-pill ' + riskClass + '">' + riskLabel + '</span><br>' +
+    'Current packaging: ' + s.pkg + '<br>' +
+    'Assumed Ontario units/year: ' + s.units.toLocaleString('en-CA') +
+    '<div class="sku-caveat">' + s.caveat + '</div>';
 
   calculate();
 }
 
-function fmt(n) {
-  return Math.round(n).toLocaleString('en-CA');
+function clearSku() {
+  currentSku = null;
+  document.getElementById('sku-search').value = '';
+  document.getElementById('sku-dropdown').classList.remove('open');
+  document.getElementById('sku-clear').style.display = 'none';
+  document.getElementById('sku-selected-info').classList.remove('visible');
 }
 
-function fmtDollar(n) {
-  return (n < 0 ? '-$' : '$') + fmt(Math.abs(n));
-}
+// Search input behaviour
+document.getElementById('sku-search').addEventListener('input', function() {
+  var val = this.value;
+  document.getElementById('sku-clear').style.display = val.length > 0 ? 'block' : 'none';
+  if (val.length === 0) {
+    document.getElementById('sku-dropdown').classList.remove('open');
+    return;
+  }
+  renderDropdown(val);
+});
 
+document.getElementById('sku-search').addEventListener('focus', function() {
+  if (this.value.length > 0) renderDropdown(this.value);
+});
+
+// Close dropdown on outside click
+document.addEventListener('click', function(e) {
+  var wrap = document.querySelector('.sku-search-wrap');
+  if (!wrap.contains(e.target)) {
+    document.getElementById('sku-dropdown').classList.remove('open');
+  }
+});
+
+// Calculator
+function fmt(n) { return Math.round(n).toLocaleString('en-CA'); }
+function fmtDollar(n) { return (n < 0 ? '-$' : '$') + fmt(Math.abs(n)); }
 function getBadgeClass(rec) {
   if (rec === 'green') return 'badge badge-green';
   if (rec === 'amber') return 'badge badge-amber';
@@ -679,22 +608,22 @@ function getBadgeClass(rec) {
 }
 
 function calculate() {
-  const matA = MATERIALS[document.getElementById('mat-a').value];
-  const matB = MATERIALS[document.getElementById('mat-b').value];
-  const wA = parseFloat(document.getElementById('weight-a').value) || 0;
-  const wB = parseFloat(document.getElementById('weight-b').value) || 0;
-  const units = parseFloat(document.getElementById('units').value) || 0;
+  var matA = MATERIALS[document.getElementById('mat-a').value];
+  var matB = MATERIALS[document.getElementById('mat-b').value];
+  var wA = parseFloat(document.getElementById('weight-a').value) || 0;
+  var wB = parseFloat(document.getElementById('weight-b').value) || 0;
+  var units = parseFloat(document.getElementById('units').value) || 0;
 
-  const tonA = (wA * units) / 1e6;
-  const tonB = (wB * units) / 1e6;
-  const tonDelta = tonA - tonB;
+  var tonA = (wA * units) / 1e6;
+  var tonB = (wB * units) / 1e6;
+  var tonDelta = tonA - tonB;
 
-  const kgA = tonA * 1000;
-  const kgB = tonB * 1000;
+  var kgA = tonA * 1000;
+  var kgB = tonB * 1000;
 
-  const feeA = kgA > 50000 ? kgA * (matA.rpra + matA.pro) : 95 + kgA * matA.pro;
-  const feeB = kgB > 50000 ? kgB * (matB.rpra + matB.pro) : 95 + kgB * matB.pro;
-  const feeDelta = feeA - feeB;
+  var feeA = kgA > 50000 ? kgA * (matA.rpra + matA.pro) : 95 + kgA * matA.pro;
+  var feeB = kgB > 50000 ? kgB * (matB.rpra + matB.pro) : 95 + kgB * matB.pro;
+  var feeDelta = feeA - feeB;
 
   document.getElementById('tonnage-a').textContent = tonA.toFixed(1);
   document.getElementById('tonnage-b').textContent = tonB.toFixed(1);
@@ -703,52 +632,66 @@ function calculate() {
   document.getElementById('fee-a').textContent = fmtDollar(feeA);
   document.getElementById('fee-b').textContent = fmtDollar(feeB);
 
-  const fd = document.getElementById('fee-delta');
+  var fd = document.getElementById('fee-delta');
   fd.textContent = fmtDollar(feeDelta);
   fd.className = 'metric-value ' + (feeDelta > 0 ? 'delta-positive' : 'delta-negative');
 
   document.getElementById('mat-a-name').textContent = matA.name;
   document.getElementById('mat-b-name').textContent = matB.name;
 
-  const ba = document.getElementById('badge-a');
+  var ba = document.getElementById('badge-a');
   ba.textContent = matA.rec_label;
   ba.className = getBadgeClass(matA.recyclability);
   document.getElementById('rec-note-a').textContent = matA.rec_note;
 
-  const bb = document.getElementById('badge-b');
+  var bb = document.getElementById('badge-b');
   bb.textContent = matB.rec_label;
   bb.className = getBadgeClass(matB.recyclability);
   document.getElementById('rec-note-b').textContent = matB.rec_note;
 
-  const recImproved =
+  var noSwap = (document.getElementById('mat-a').value === document.getElementById('mat-b').value) && (wA === wB);
+
+  var recImproved =
     (matA.recyclability === 'red'   && (matB.recyclability === 'amber' || matB.recyclability === 'green')) ||
     (matA.recyclability === 'amber' && matB.recyclability === 'green');
+  var recSame = matA.recyclability === matB.recyclability;
 
-  const recSame = matA.recyclability === matB.recyclability;
+  var summaryText;
 
-  const weightText = tonDelta > 0
-    ? 'reduces packaging weight by ' + tonDelta.toFixed(1) + ' tonnes/year'
-    : tonDelta < 0
-    ? 'increases packaging weight by ' + Math.abs(tonDelta).toFixed(1) + ' tonnes/year'
-    : 'keeps packaging weight the same';
+  if (noSwap) {
+    summaryText =
+      'No material swap is recommended for this SKU. ' +
+      'Current packaging is ' + matA.name.toLowerCase() + ' (' + matA.rec_label.toLowerCase() + ') ' +
+      'at an estimated EPR obligation of ' + fmtDollar(feeA) + '/year across ' + fmt(units) + ' units. ' +
+      'The lever here is not format change — see the SKU note above for the specific improvement pathway. ' +
+      'This analysis is for upstream design decision support — confirm final obligations with your PRO before reporting.';
+  } else {
+    var weightText = tonDelta > 0
+      ? 'reduces packaging weight by ' + tonDelta.toFixed(1) + ' tonnes/year'
+      : tonDelta < 0
+      ? 'increases packaging weight by ' + Math.abs(tonDelta).toFixed(1) + ' tonnes/year'
+      : 'keeps packaging weight the same';
 
-  const savingsText = feeDelta > 0
-    ? 'an estimated EPR fee saving of ' + fmtDollar(feeDelta) + '/year'
-    : feeDelta < 0
-    ? 'an estimated EPR fee increase of ' + fmtDollar(Math.abs(feeDelta)) + '/year'
-    : 'no change in estimated EPR fees';
+    var savingsText = feeDelta > 0
+      ? 'an estimated EPR fee saving of ' + fmtDollar(feeDelta) + '/year'
+      : feeDelta < 0
+      ? 'an estimated EPR fee increase of ' + fmtDollar(Math.abs(feeDelta)) + '/year'
+      : 'no change in estimated EPR fees';
 
-  const recText = recImproved
-    ? 'improves recyclability from ' + matA.rec_label.toLowerCase() + ' to ' + matB.rec_label.toLowerCase()
-    : recSame
-    ? 'maintains the same recyclability rating (' + matB.rec_label.toLowerCase() + ')'
-    : 'changes the recyclability profile — note: ' + matB.rec_note.toLowerCase();
+    var recText = recImproved
+      ? 'improves recyclability from ' + matA.rec_label.toLowerCase() + ' to ' + matB.rec_label.toLowerCase()
+      : recSame
+      ? 'maintains the same recyclability rating (' + matB.rec_label.toLowerCase() + ')'
+      : 'changes the recyclability profile — note: ' + matB.rec_note.toLowerCase();
 
-  document.getElementById('summary').textContent =
-    'Switching from ' + matA.name.toLowerCase() + ' to ' + matB.name.toLowerCase() +
-    ' at ' + fmt(units) + ' units/year ' + weightText + ', generates ' + savingsText +
-    ' based on 2026 RPRA rates and indicative PRO fee ranges, and ' + recText +
-    '. This analysis is for upstream design decision support — confirm final obligations with your PRO before reporting.';
+    summaryText =
+      'Switching from ' + matA.name.toLowerCase() + ' to ' + matB.name.toLowerCase() +
+      ' at ' + fmt(units) + ' units/year ' + weightText + ', generates ' + savingsText +
+      ' based on 2026 RPRA rates and indicative PRO fee ranges, and ' + recText +
+      '. This analysis is for upstream design decision support — confirm final obligations with your PRO before reporting.';
+  }
+
+  document.getElementById('summary').textContent = summaryText;
 }
 
 ['mat-a', 'mat-b', 'weight-a', 'weight-b', 'units'].forEach(function(id) {
