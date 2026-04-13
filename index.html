@@ -278,16 +278,67 @@
     .risk-high { background: var(--red-bg); color: var(--red-text); }
     .risk-med  { background: var(--amber-bg); color: var(--amber-text); }
     .risk-low  { background: var(--green-bg); color: var(--green-text); }
+
+    /* PROVINCE SELECTOR */
+    .province-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 0.75rem;
+    }
+
+    .prov-btn {
+      flex: 1;
+      padding: 10px 8px;
+      border: 0.5px solid var(--border-mid);
+      border-radius: var(--radius-md);
+      background: var(--bg-secondary);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.15s;
+    }
+
+    .prov-btn:hover { border-color: var(--accent); color: var(--text-primary); }
+
+    .prov-btn.active {
+      border-color: var(--accent);
+      background: var(--bg);
+      color: var(--text-primary);
+      box-shadow: 0 0 0 1.5px var(--accent);
+    }
+
+    .prov-note {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      line-height: 1.5;
+    }
+
+    .prov-note strong { color: var(--text-secondary); }
   </style>
 </head>
 <body>
 <div class="page">
 
   <header>
-    <h1>Ontario Blue Box EPR — Packaging swap tool</h1>
-    <p>Enter your current packaging and a proposed alternative to estimate EPR cost and sustainability impact. Built for upstream packaging design decisions in Own Brands retail.</p>
-    <p class="byline">A prototype by Manks &nbsp;·&nbsp; Based on 2026 RPRA fee schedule (O. Reg. 391/21)</p>
+    <h1>Canada EPR — Packaging swap tool</h1>
+    <p>Estimate EPR cost and sustainability impact across provinces. Built for upstream packaging design decisions in Own Brands retail.</p>
+    <p class="byline">A prototype by Manks &nbsp;·&nbsp; Ontario: 2026 RPRA fee schedule · Alberta: Circular Materials 2025 published rates</p>
   </header>
+
+  <!-- PROVINCE SELECTOR -->
+  <div class="card">
+    <p class="section-label">Province</p>
+    <div class="province-tabs">
+      <button class="prov-btn active" id="prov-ON" onclick="selectProvince('ON', this)">Ontario</button>
+      <button class="prov-btn" id="prov-AB" onclick="selectProvince('AB', this)">Alberta</button>
+    </div>
+    <div class="prov-note" id="prov-note">
+      <strong>Ontario:</strong> RPRA compliance fee $0.0097/kg (confirmed 2026 rate). PRO collection fees are indicative estimates — Ontario PRO rates are not publicly published and are set through a private fee-setting process. Actual fees require direct quotation from your PRO (Circular Materials, Ryse Solutions, or H2 Compliance).
+    </div>
+  </div>
 
   <!-- SKU LOOKUP -->
   <div class="card">
@@ -392,7 +443,7 @@
         <div class="metric-sub">CAD / year</div>
       </div>
     </div>
-    <p class="note">RPRA compliance fee: $0.0097/kg (2026 rate, producers &gt;50,000 kg). PRO collection and processing fees vary by material — estimates use indicative Circular Materials rate ranges. Actual fees depend on PRO selection and material-specific surcharges.</p>
+    <p class="note" id="epr-note">RPRA compliance fee: $0.0097/kg (2026 rate, producers &gt;50,000 kg). PRO collection and processing fees vary by material — estimates use indicative Circular Materials rate ranges. Actual fees depend on PRO selection and material-specific surcharges.</p>
 
     <hr>
 
@@ -418,23 +469,73 @@
   </div>
 
   <footer>
-    Built on the 2026 RPRA program fee schedule. PRO fee estimates are indicative ranges based on publicly available Circular Materials documentation and are not a substitute for direct PRO quotation. For compliance purposes, register with RPRA at rpra.ca and contact your Producer Responsibility Organization directly. This tool is for upstream design decision support only.
+    Ontario: Built on the 2026 RPRA program fee schedule. PRO fee estimates are indicative ranges and are not a substitute for direct PRO quotation. Register with RPRA at rpra.ca. Alberta: Fee rates sourced from the published Circular Materials Alberta 2025 Fee Schedule. Rates are subject to annual revision — confirm current rates at circularmaterials.ca. This tool is for upstream design decision support only and does not constitute compliance advice.
   </footer>
 
 </div>
 
 <script>
-const MATERIALS = {
-  plastic_rigid:    { name: 'Rigid plastic (PET/HDPE)', rpra: 0.0097, pro: 0.18, recyclability: 'amber', rec_label: 'Conditionally recyclable', rec_note: 'Accepted in Blue Box but recovery rates vary by resin type and colour' },
-  plastic_flexible: { name: 'Flexible plastic film',    rpra: 0.0097, pro: 0.28, recyclability: 'red',   rec_label: 'Difficult to recycle',      rec_note: 'Accepted from Jan 2026 but infrastructure still limited across Ontario' },
-  plastic_foam:     { name: 'Foam / EPS',               rpra: 0.0097, pro: 0.35, recyclability: 'red',   rec_label: 'Rarely recyclable',         rec_note: 'Low commodity value, most facilities do not accept EPS' },
-  paper_corrugated: { name: 'Corrugated cardboard',     rpra: 0.0097, pro: 0.06, recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'Strong recovery infrastructure, high commodity value' },
-  paper_boxboard:   { name: 'Boxboard / paperboard',    rpra: 0.0097, pro: 0.08, recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'Well-accepted across Ontario Blue Box program' },
-  glass:            { name: 'Glass',                    rpra: 0.0097, pro: 0.22, recyclability: 'amber', rec_label: 'Recyclable with caveats',   rec_note: 'Weight increases transport emissions; broken glass contaminates other streams' },
-  metal_steel:      { name: 'Steel / tin',              rpra: 0.0097, pro: 0.10, recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'High commodity value, well-established processing stream' },
-  metal_alum:       { name: 'Aluminium',                rpra: 0.0097, pro: 0.09, recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'Highest commodity value of any packaging material' },
-  multi_layer:      { name: 'Multi-layer / laminate',   rpra: 0.0097, pro: 0.42, recyclability: 'red',   rec_label: 'Not recyclable',            rec_note: 'Mixed material construction prevents separation; landfill outcome likely' },
+// Province fee data
+// Ontario PRO fees: indicative estimates (not publicly published)
+// Alberta PRO fees: published Circular Materials Alberta 2025 Fee Schedule (cents/kg converted to $/kg)
+// Note: Alberta has no separate regulatory fee equivalent to RPRA; ARMA oversight fee is minimal and included in Circular Materials rates
+const FEES = {
+  ON: {
+    name: 'Ontario',
+    regFee: 0.0097, // RPRA compliance fee, confirmed 2026
+    regFeeLabel: 'RPRA compliance fee (confirmed 2026)',
+    regFeeNote: 'Flat rate for producers over 50,000 kg. Goes to RPRA operating costs.',
+    proRates: {
+      plastic_rigid:    0.18,  // indicative estimate
+      plastic_flexible: 0.28,  // indicative estimate
+      plastic_foam:     0.35,  // indicative estimate
+      paper_corrugated: 0.06,  // indicative estimate
+      paper_boxboard:   0.08,  // indicative estimate
+      glass:            0.22,  // indicative estimate
+      metal_steel:      0.10,  // indicative estimate
+      metal_alum:       0.09,  // indicative estimate
+      multi_layer:      0.42,  // indicative estimate
+    },
+    proLabel: 'PRO collection fee (indicative estimate)',
+    proNote: 'Ontario PRO rates are not publicly published. These are indicative estimates based on Circular Materials methodology and comparable provinces. Actual fees require direct PRO quotation.',
+  },
+  AB: {
+    name: 'Alberta',
+    regFee: 0,     // ARMA oversight fee negligible / included in CM rates
+    regFeeLabel: 'Regulatory oversight fee',
+    regFeeNote: 'Alberta ARMA oversight fee is incorporated into Circular Materials rates.',
+    proRates: {
+      // Source: Circular Materials Alberta 2025 Fee Schedule (published)
+      // Rates in $/kg (converted from cents/kg)
+      // PET and HDPE separated in AB schedule; using weighted average for tool's combined "rigid plastic" category
+      plastic_rigid:    0.845, // blended: PET containers 1.21, HDPE containers 0.48, weighted avg for mixed rigid plastic
+      plastic_flexible: 1.97,  // LDPE/HDPE Film 197¢/kg
+      plastic_foam:     3.53,  // Expanded Polystyrene 353¢/kg
+      paper_corrugated: 0.69,  // Corrugated Cardboard 69¢/kg
+      paper_boxboard:   0.38,  // Boxboard and Other Paper Packaging 38¢/kg
+      glass:            0.44,  // Clear/Coloured Glass 44¢/kg
+      metal_steel:      0.66,  // Other Steel Containers and Packaging 66¢/kg (Steel Aerosols 56¢/kg)
+      metal_alum:       0.71,  // Aluminum Food Containers 72¢/kg, Other Aluminum 70¢/kg, avg 71¢/kg
+      multi_layer:      0.85,  // Plastic Laminates 163¢/kg; Aseptic/Gable Top 85¢/kg — using 85¢ as multi-layer carton proxy; note: true plastic laminates are 163¢/kg
+    },
+    proLabel: 'Circular Materials fee (published 2025)',
+    proNote: 'Source: Circular Materials Alberta 2025 Fee Schedule (published). Rates subject to annual revision. Note: Alberta PET bottles are 121¢/kg and HDPE is 48¢/kg — the tool uses a blended rate for the combined rigid plastic category. Multi-layer laminate (plastic laminates) is 163¢/kg in Alberta — higher than shown here which uses the aseptic carton rate as a proxy.',
+  },
 };
+
+const MATERIALS = {
+  plastic_rigid:    { name: 'Rigid plastic (PET/HDPE)', recyclability: 'amber', rec_label: 'Conditionally recyclable', rec_note: 'Accepted in Blue Box but recovery rates vary by resin type and colour' },
+  plastic_flexible: { name: 'Flexible plastic film',    recyclability: 'red',   rec_label: 'Difficult to recycle',      rec_note: 'Limited processing infrastructure across both Ontario and Alberta' },
+  plastic_foam:     { name: 'Foam / EPS',               recyclability: 'red',   rec_label: 'Rarely recyclable',         rec_note: 'Low commodity value, most facilities do not accept EPS' },
+  paper_corrugated: { name: 'Corrugated cardboard',     recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'Strong recovery infrastructure, high commodity value in both provinces' },
+  paper_boxboard:   { name: 'Boxboard / paperboard',    recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'Well-accepted across Blue Box programs in both provinces' },
+  glass:            { name: 'Glass',                    recyclability: 'amber', rec_label: 'Recyclable with caveats',   rec_note: 'Weight increases transport emissions; broken glass contaminates other streams' },
+  metal_steel:      { name: 'Steel / tin',              recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'High commodity value, well-established processing stream' },
+  metal_alum:       { name: 'Aluminium',                recyclability: 'green', rec_label: 'Highly recyclable',         rec_note: 'Highest commodity value of any packaging material' },
+  multi_layer:      { name: 'Multi-layer / laminate',   recyclability: 'red',   rec_label: 'Not recyclable',            rec_note: 'Mixed material construction prevents separation; landfill outcome likely' },
+};
+
+var selectedProvince = 'ON';
 
 // SKU data: name, category, packaging description, material key, pkg weight (g), typical annual Ontario units, suggested alt material, suggested alt weight (g), epr risk, caveat
 const SKUS = [
@@ -598,6 +699,28 @@ document.addEventListener('click', function(e) {
   }
 });
 
+// Province selector
+function selectProvince(code, btn) {
+  selectedProvince = code;
+  document.querySelectorAll('.prov-btn').forEach(function(b) { b.classList.remove('active'); });
+  btn.classList.add('active');
+
+  var prov = FEES[code];
+  var notes = {
+    ON: '<strong>Ontario:</strong> RPRA compliance fee $0.0097/kg (confirmed 2026 rate). PRO collection fees are indicative estimates — Ontario PRO rates are not publicly published and are set through a private fee-setting process. Actual fees require direct quotation from your PRO (Circular Materials, Ryse Solutions, or H2 Compliance).',
+    AB: '<strong>Alberta:</strong> Rates from the published Circular Materials Alberta 2025 Fee Schedule. No separate regulatory fee — ARMA oversight is incorporated into CM rates. PET (121¢/kg) and HDPE (48¢/kg) are separate in the AB schedule; the tool uses a blended rate for the combined rigid plastic category. True plastic laminates are 163¢/kg in Alberta.',
+  };
+  document.getElementById('prov-note').innerHTML = notes[code];
+
+  var eprNotes = {
+    ON: 'RPRA compliance fee: $0.0097/kg (2026 rate, producers &gt;50,000 kg). PRO collection and processing fees vary by material — estimates use indicative Circular Materials rate ranges. Actual fees depend on PRO selection and material-specific surcharges.',
+    AB: 'Rates: Circular Materials Alberta 2025 published fee schedule (cents/kg). No separate RPRA-equivalent regulatory fee in Alberta. PET containers 121¢/kg · HDPE 48¢/kg · Flexible plastic 197¢/kg · Corrugated 69¢/kg · Boxboard 38¢/kg · Glass 44¢/kg · Steel 66¢/kg · Aluminium 71¢/kg · Plastic laminates 163¢/kg.',
+  };
+  document.getElementById('epr-note').innerHTML = eprNotes[code];
+
+  calculate();
+}
+
 // Calculator
 function fmt(n) { return Math.round(n).toLocaleString('en-CA'); }
 function fmtDollar(n) { return (n < 0 ? '-$' : '$') + fmt(Math.abs(n)); }
@@ -608,11 +731,17 @@ function getBadgeClass(rec) {
 }
 
 function calculate() {
-  var matA = MATERIALS[document.getElementById('mat-a').value];
-  var matB = MATERIALS[document.getElementById('mat-b').value];
+  var matAKey = document.getElementById('mat-a').value;
+  var matBKey = document.getElementById('mat-b').value;
+  var matA = MATERIALS[matAKey];
+  var matB = MATERIALS[matBKey];
   var wA = parseFloat(document.getElementById('weight-a').value) || 0;
   var wB = parseFloat(document.getElementById('weight-b').value) || 0;
   var units = parseFloat(document.getElementById('units').value) || 0;
+
+  var prov = FEES[selectedProvince];
+  var rateA = prov.regFee + prov.proRates[matAKey];
+  var rateB = prov.regFee + prov.proRates[matBKey];
 
   var tonA = (wA * units) / 1e6;
   var tonB = (wB * units) / 1e6;
@@ -621,8 +750,9 @@ function calculate() {
   var kgA = tonA * 1000;
   var kgB = tonB * 1000;
 
-  var feeA = kgA > 50000 ? kgA * (matA.rpra + matA.pro) : 95 + kgA * matA.pro;
-  var feeB = kgB > 50000 ? kgB * (matB.rpra + matB.pro) : 95 + kgB * matB.pro;
+  var threshold = selectedProvince === 'ON' ? 50000 : 0;
+  var feeA = (threshold === 0 || kgA > threshold) ? kgA * rateA : 95 + kgA * prov.proRates[matAKey];
+  var feeB = (threshold === 0 || kgB > threshold) ? kgB * rateB : 95 + kgB * prov.proRates[matBKey];
   var feeDelta = feeA - feeB;
 
   document.getElementById('tonnage-a').textContent = tonA.toFixed(1);
@@ -649,12 +779,17 @@ function calculate() {
   bb.className = getBadgeClass(matB.recyclability);
   document.getElementById('rec-note-b').textContent = matB.rec_note;
 
-  var noSwap = (document.getElementById('mat-a').value === document.getElementById('mat-b').value) && (wA === wB);
+  var noSwap = (matAKey === matBKey) && (wA === wB);
 
   var recImproved =
     (matA.recyclability === 'red'   && (matB.recyclability === 'amber' || matB.recyclability === 'green')) ||
     (matA.recyclability === 'amber' && matB.recyclability === 'green');
   var recSame = matA.recyclability === matB.recyclability;
+
+  var provName = prov.name;
+  var rateNote = selectedProvince === 'ON'
+    ? '2026 RPRA rates and indicative PRO fee estimates'
+    : 'published Circular Materials Alberta 2025 fee schedule';
 
   var summaryText;
 
@@ -662,7 +797,7 @@ function calculate() {
     summaryText =
       'No material swap is recommended for this SKU. ' +
       'Current packaging is ' + matA.name.toLowerCase() + ' (' + matA.rec_label.toLowerCase() + ') ' +
-      'at an estimated EPR obligation of ' + fmtDollar(feeA) + '/year across ' + fmt(units) + ' units. ' +
+      'at an estimated EPR obligation of ' + fmtDollar(feeA) + '/year in ' + provName + ' across ' + fmt(units) + ' units. ' +
       'The lever here is not format change — see the SKU note above for the specific improvement pathway. ' +
       'This analysis is for upstream design decision support — confirm final obligations with your PRO before reporting.';
   } else {
@@ -673,10 +808,10 @@ function calculate() {
       : 'keeps packaging weight the same';
 
     var savingsText = feeDelta > 0
-      ? 'an estimated EPR fee saving of ' + fmtDollar(feeDelta) + '/year'
+      ? 'an estimated EPR fee saving of ' + fmtDollar(feeDelta) + '/year in ' + provName
       : feeDelta < 0
-      ? 'an estimated EPR fee increase of ' + fmtDollar(Math.abs(feeDelta)) + '/year'
-      : 'no change in estimated EPR fees';
+      ? 'an estimated EPR fee increase of ' + fmtDollar(Math.abs(feeDelta)) + '/year in ' + provName
+      : 'no change in estimated EPR fees in ' + provName;
 
     var recText = recImproved
       ? 'improves recyclability from ' + matA.rec_label.toLowerCase() + ' to ' + matB.rec_label.toLowerCase()
@@ -687,7 +822,7 @@ function calculate() {
     summaryText =
       'Switching from ' + matA.name.toLowerCase() + ' to ' + matB.name.toLowerCase() +
       ' at ' + fmt(units) + ' units/year ' + weightText + ', generates ' + savingsText +
-      ' based on 2026 RPRA rates and indicative PRO fee ranges, and ' + recText +
+      ' based on ' + rateNote + ', and ' + recText +
       '. This analysis is for upstream design decision support — confirm final obligations with your PRO before reporting.';
   }
 
